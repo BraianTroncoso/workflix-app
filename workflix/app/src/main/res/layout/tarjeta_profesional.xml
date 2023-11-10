@@ -85,7 +85,6 @@
             android:layout_marginBottom="8dp"
             android:maxLines="3"
             android:textColor="@color/black"
-            android:textAlignment="center"
             android:gravity="center_vertical"
             style="@style/RoundedCorners8dp"/>
 
