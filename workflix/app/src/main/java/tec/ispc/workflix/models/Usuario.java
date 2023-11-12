@@ -52,9 +52,7 @@ public class Usuario {
     @SerializedName("profesion")
     @Expose
     private String profesion;
-    
     public Usuario(){};
-
     public Usuario(int id, String nombre, String apellido, String telefono, String correo, String ciudad
                    ,String direccion, String provincia, String profesion, String descripcion){
         this.id = id;
@@ -68,29 +66,6 @@ public class Usuario {
         this.descripcion = descripcion;
         this.profesion = profesion;
     }
-   /* public Usuario(int id, String nombre, String apellido, String clave, String telefono, String correo, boolean is_admin){
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.clave = clave;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.is_admin = is_admin;
-    }*/
-   /* public Usuario(int id, String nombre, String apellido, String clave, String telefono, String correo, boolean is_admin, String ciudad, String provincia, String descripcion, String foto, String profesion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.clave = clave;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.is_admin = is_admin;
-        this.ciudad = ciudad;
-        this.provincia = provincia;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.profesion = profesion;
-    }*/
 
     public int getId() {
         return id;
@@ -170,6 +145,14 @@ public class Usuario {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getFoto() {
