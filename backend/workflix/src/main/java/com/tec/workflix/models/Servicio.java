@@ -13,6 +13,10 @@ public class Servicio {
     private int id;
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     public Servicio() {
     }
 

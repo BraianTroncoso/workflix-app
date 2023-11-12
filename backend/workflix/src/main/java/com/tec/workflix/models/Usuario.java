@@ -4,6 +4,8 @@ package com.tec.workflix.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Table(name = "Usuario")
 @Entity
@@ -36,6 +38,10 @@ public class Usuario {
     private String profesion;
     @Column(columnDefinition = "boolean default false")
     private boolean is_admin;
+
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Servicio> servicios;
 
     public Usuario() {
         is_admin = false; // Establecer el valor predeterminado a false en el constructor
