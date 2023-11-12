@@ -11,9 +11,9 @@ public class Servicio {
     @SerializedName("nombre")
     @Expose
     private String nombre;
-    @SerializedName("usuario_id")
+   /* @SerializedName("usuario_id")
     @Expose
-    private int usuario_id;
+    private int usuario_id;*/
 
     public Servicio(){};
     public Servicio(int id, String nombre) {
@@ -36,11 +36,11 @@ public class Servicio {
         this.nombre = nombre;
     }
 
-    public int getUsuario_id() {
+/*    public int getUsuario_id() {
         return usuario_id;
     }
 
     public void setUsuario_id(int usuario_id) {
         this.usuario_id = usuario_id;
-    }
+    }*/
 }
