@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import tec.ispc.workflix.R;
+import tec.ispc.workflix.models.Servicio;
 import tec.ispc.workflix.models.Usuario;
 
 public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.CatalogoViewHolder> {
@@ -82,6 +83,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
 
     private void abrirTarjetaAmpliadaActivity(int position) {
         Usuario usuario = listaDeUsuarios.get(position);
+        Servicio servicio = listaDeServicios.get(position);
         Intent intent = new Intent(context, TarjetaAmpliadaActivity.class);
 
         // Pasa los datos individuales del usuario a través del Intent
@@ -92,7 +94,11 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         intent.putExtra("telefono", usuario.getTelefono());
         intent.putExtra("ciudad", usuario.getCiudad());
         intent.putExtra("provincia", usuario.getProvincia());
-        intent.putExtra("servicio", usuario.getProfesion());
+        if (servicio.getUsuario_id() == usuario){
+            intent.putExtra("servicio", servicio.getNombre());
+        }else {
+            intent.putExtra("servicio", "No tiene servicio");
+        }
         // Agrega más extras según sea necesario
 
         context.startActivity(intent);
