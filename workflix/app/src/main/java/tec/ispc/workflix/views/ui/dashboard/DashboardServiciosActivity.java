@@ -42,6 +42,7 @@ public class DashboardServiciosActivity extends AppCompatActivity {
                 Intent intent=new Intent(DashboardServiciosActivity.this, ServicioActivity.class);
                 intent.putExtra("ID","");
                 intent.putExtra("NOMBRE","");
+                intent.putExtra("USUARIOS","");
                 startActivity(intent);
             }
         });
