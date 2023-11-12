@@ -11,6 +11,10 @@ public class Servicio {
     @SerializedName("nombre")
     @Expose
     private String nombre;
+    @SerializedName("usuario_id")
+    @Expose
+    private int usuario_id;
+
     public Servicio(){};
     public Servicio(int id, String nombre) {
         this.id = id;
