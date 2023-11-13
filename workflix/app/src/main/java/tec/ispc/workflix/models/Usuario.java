@@ -49,8 +49,7 @@ public class Usuario {
     @SerializedName("foto")
     @Expose
     private String foto;
-    @SerializedName("profesion")
-    @Expose
+
     private String profesion;
     public Usuario(){};
     public Usuario(int id, String nombre, String apellido, String telefono, String correo, String ciudad

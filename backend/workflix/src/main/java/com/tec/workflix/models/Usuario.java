@@ -2,6 +2,10 @@ package com.tec.workflix.models;
 
 
 import jakarta.persistence.*;
+
+import java.util.List;
+
+
 @Table(name = "Usuario")
 @Entity
 public class Usuario {
@@ -34,9 +38,61 @@ public class Usuario {
     @Column(columnDefinition = "boolean default false")
     private boolean is_admin;
 
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Servicio> servicios;
+
     public Usuario() {
         is_admin = false; // Establecer el valor predeterminado a false en el constructor
     }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
 
     public int getId() {
         return id;
@@ -88,6 +144,7 @@ public class Usuario {
 
     public String getDireccion() {
         return direccion;
+
     }
 
     public void setDireccion(String direccion) {

@@ -34,6 +34,9 @@ public class ServicioActivity extends AppCompatActivity {
         TextView nombre=(TextView)findViewById(R.id.NombreServicio);
         final EditText txtNombre=(EditText)findViewById(R.id.txtNombreServicio);
 
+        TextView usuSer=(TextView)findViewById(R.id.NombreUsuarioServicio);
+        final EditText txtUsuSer=(EditText)findViewById(R.id.txtNombreUsuarioServicio);
+
         Button btnSave=(Button)findViewById(R.id.btnSaveServicio);
         Button btnVolver=(Button)findViewById(R.id.btnVolverServicio);
         Button btnEliminar=(Button)findViewById(R.id.btnEliminarServicio);
@@ -41,10 +44,11 @@ public class ServicioActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         final String id = bundle.getString("ID");
         String nom=bundle.getString("NOMBRE");
+        String usu=bundle.getString("USUARIOS");
 
         txtId.setText(id);
         txtNombre.setText(nom);
-
+        txtUsuSer.setText(usu);
 
         if(id.trim().length()==0||id.equals("")){
             iduser.setVisibility(View.INVISIBLE);
@@ -57,6 +61,7 @@ public class ServicioActivity extends AppCompatActivity {
                 Servicio servicio = new Servicio();
 
                 servicio.setNombre(txtNombre.getText().toString());
+                servicio.setUsuario_id(Integer.parseInt(txtUsuSer.getText().toString()));
 
 
                 if(id.trim().length()==0||id.equals("")){

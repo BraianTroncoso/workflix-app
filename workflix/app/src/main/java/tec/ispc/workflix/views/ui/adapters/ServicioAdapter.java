@@ -31,11 +31,13 @@ public class ServicioAdapter extends ArrayAdapter<Servicio> {
         View rowView=layoutInflater.inflate(R.layout.content_listar_servicios,parent,false);
 
         TextView txtidServicio=(TextView)rowView.findViewById(R.id.IdServicioList);
-        TextView txtNombre=(TextView)rowView.findViewById(R.id.NombreServicioList);;
+        TextView txtNombre=(TextView)rowView.findViewById(R.id.NombreServicioList);
+        TextView txtUsuSer=(TextView)rowView.findViewById(R.id.NombreUsuarioServicioList);
 
         txtidServicio.setText(String.format("ID:%d",servicios.get(position).getId()));
         String nombreCompleto = servicios.get(position).getNombre();
         txtNombre.setText(String.format("Servicio: %s", nombreCompleto));
+        txtUsuSer.setText(String.format("USUARIOS:%d",servicios.get(position).getUsuario_id()));
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +45,7 @@ public class ServicioAdapter extends ArrayAdapter<Servicio> {
                 Intent intent=new Intent(context, ServicioActivity.class);
                 intent.putExtra("ID",String.valueOf(servicios.get(position).getId()));
                 intent.putExtra("NOMBRE",servicios.get(position).getNombre());
+                intent.putExtra("USUARIOS",servicios.get(position).getUsuario_id());
                 context.startActivity(intent);
             }
         });

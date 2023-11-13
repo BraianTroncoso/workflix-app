@@ -11,6 +11,10 @@ public class Servicio {
     private int id;
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     public Servicio() {
     }
 
@@ -34,4 +38,14 @@ public class Servicio {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }

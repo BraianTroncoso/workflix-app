@@ -1,5 +1,6 @@
 package com.tec.workflix.models;
 
+
 public class Login {
     private String correo;
     private String clave;
