@@ -39,6 +39,7 @@ public class Servicio {
         this.nombre = nombre;
     }
 
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -46,4 +47,5 @@ public class Servicio {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
 }

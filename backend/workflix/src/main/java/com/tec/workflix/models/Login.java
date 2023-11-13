@@ -5,7 +5,6 @@ public class Login {
     private String correo;
     private String clave;
 
-
     public String getCorreo() {
         return correo;
     }
@@ -22,3 +21,4 @@ public class Login {
         this.clave = clave;
     }
 }
+
