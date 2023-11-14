@@ -11,13 +11,11 @@ public class Servicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
+    @Column
     private String nombre;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
     private List<UsuarioServicio> usuarioServicios;
-
-
-    private Usuario usuario;
 
     public Servicio() {
     }
@@ -43,13 +41,6 @@ public class Servicio {
         this.nombre = nombre;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 
     public List<UsuarioServicio> getUsuarioServicios() {
         return usuarioServicios;
