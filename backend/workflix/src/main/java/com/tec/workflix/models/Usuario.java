@@ -40,59 +40,11 @@ public class Usuario {
 
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Servicio> servicios;
+    private List<UsuarioServicio> usuarioServicios;
 
     public Usuario() {
         is_admin = false; // Establecer el valor predeterminado a false en el constructor
     }
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
 
     public int getId() {
         return id;
@@ -144,7 +96,6 @@ public class Usuario {
 
     public String getDireccion() {
         return direccion;
-
     }
 
     public void setDireccion(String direccion) {
@@ -195,7 +146,15 @@ public class Usuario {
         return is_admin;
     }
 
-    public void setIs_admin(boolean admin) {
-        is_admin = admin;
+    public void setIs_admin(boolean is_admin) {
+        this.is_admin = is_admin;
+    }
+
+    public List<UsuarioServicio> getUsuarioServicios() {
+        return usuarioServicios;
+    }
+
+    public void setUsuarioServicios(List<UsuarioServicio> usuarioServicios) {
+        this.usuarioServicios = usuarioServicios;
     }
 }
