@@ -14,9 +14,11 @@ import retrofit2.Response;
 import tec.ispc.workflix.R;
 import tec.ispc.workflix.models.Servicio;
 import tec.ispc.workflix.models.Usuario;
+import tec.ispc.workflix.models.UsuarioServicio;
 import tec.ispc.workflix.utils.Apis;
 import tec.ispc.workflix.utils.ServicioService;
 import tec.ispc.workflix.utils.UsuarioService;
+import tec.ispc.workflix.utils.UsuarioServicioService;
 import tec.ispc.workflix.views.ui.adapters.ServicioAdapter;
 import tec.ispc.workflix.views.ui.dashboard.DashboardServiciosActivity;
 
@@ -25,6 +27,8 @@ public class CatalogoActivity extends AppCompatActivity {
     private CatalogoAdapter catalogoAdapter;
     private List<Usuario> listaDeUsuarios = new ArrayList<>();
     List<Servicio> listaDeServicios= new ArrayList<>();
+    List<UsuarioServicio> listaDeUsuarioServicios= new ArrayList<>();
+
 
 
     @Override
@@ -49,11 +53,30 @@ public class CatalogoActivity extends AppCompatActivity {
                     listaDeServicios = response.body();
                     Log.d("listServicio", "Lista de servicios obtenida correctamente.");
                     // Continuar con la asignación de profesiones
-                    asignarProfesiones(listaDeUsuarios,listaDeServicios);
+                   /* asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);*/
                 }
             }
             @Override
             public void onFailure(Call<List<Servicio>> call, Throwable t) {
+                Log.e("Error no pude recuperar la lista de servicios:",t.getMessage());
+            }
+        });
+    }
+    public void listUsuarioServicio() {
+        UsuarioServicioService usuarioServicioService= Apis.getUsuarioServicioService();
+        Call<List<UsuarioServicio>> call=usuarioServicioService.getUsuariosServicios();
+        call.enqueue(new Callback<List<UsuarioServicio>>() {
+            @Override
+            public void onResponse(Call<List<UsuarioServicio>> call, Response<List<UsuarioServicio>> response) {
+                if(response.isSuccessful()) {
+                    listaDeUsuarioServicios = response.body();
+                    Log.d("listUsuarioServicio", "Lista de Usuarioservicios obtenida correctamente.");
+                    // Continuar con la asignación de profesiones
+                   /* asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);*/
+                }
+            }
+            @Override
+            public void onFailure(Call<List<UsuarioServicio>> call, Throwable t) {
                 Log.e("Error no pude recuperar la lista de servicios:",t.getMessage());
             }
         });
@@ -71,8 +94,8 @@ public class CatalogoActivity extends AppCompatActivity {
                     listaDeUsuarios = filtrarUsuariosNoAdmin(listaDeUsuarios);
                     // Llamada síncrona a listServicio() antes de asignar profesiones
                     listServicio();
-
-                    listaDeUsuarios = asignarProfesiones(listaDeUsuarios,listaDeServicios);
+                    listUsuarioServicio();
+                    listaDeUsuarios = asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);
                     catalogoAdapter.setUsuarios(listaDeUsuarios);
                 } else {
                     Toast.makeText(CatalogoActivity.this, "Error al obtener usuarios", Toast.LENGTH_SHORT).show();
@@ -94,25 +117,25 @@ public class CatalogoActivity extends AppCompatActivity {
         }
         return usuariosNoAdmin;
     }
-    private List<Usuario> asignarProfesiones(List<Usuario> usuarios, List<Servicio> servicios) {
+    private List<Usuario> asignarProfesiones(List<Usuario> usuarios, List<Servicio> servicios, List<UsuarioServicio> usuarioServicios) {
         List<Usuario> usuariosConProfesion = new ArrayList<>();
 
         for (Usuario usuario : usuarios) {
             boolean tieneProfesion = false;
             for (Servicio servicio : servicios) {
-                if (servicio.getUsuario_id() == usuario.getId()) {
-                    usuario.setProfesion(servicio.getNombre());
-                    tieneProfesion = true;
-                    break; // Si ya encontramos la profesión, no es necesario seguir buscando
+                for (UsuarioServicio usuarioServicio : usuarioServicios) {
+                    if (usuarioServicio.getUsuario_id().equals(usuario) && usuarioServicio.getServicio_id().equals(servicio)) {
+                        usuario.setProfesion(servicio.getNombre());
+                        tieneProfesion = true;
+                        break;
+                    }
                 }
             }
             if (!tieneProfesion) {
                 usuario.setProfesion("No tiene profesion");
             }
-
             usuariosConProfesion.add(usuario);
         }
-
         return usuariosConProfesion;
     }
 

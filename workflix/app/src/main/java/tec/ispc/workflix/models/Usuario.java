@@ -3,6 +3,8 @@ package tec.ispc.workflix.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Usuario {
 
     @SerializedName("id")
@@ -168,5 +170,18 @@ public class Usuario {
 
     public void setProfesion(String profesion) {
         this.profesion = profesion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return id == usuario.id && is_admin == usuario.is_admin && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellido, usuario.apellido) && Objects.equals(clave, usuario.clave) && Objects.equals(telefono, usuario.telefono) && Objects.equals(correo, usuario.correo) && Objects.equals(ciudad, usuario.ciudad) && Objects.equals(provincia, usuario.provincia) && Objects.equals(descripcion, usuario.descripcion) && Objects.equals(direccion, usuario.direccion) && Objects.equals(foto, usuario.foto) && Objects.equals(profesion, usuario.profesion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, apellido, clave, telefono, correo, is_admin, ciudad, provincia, descripcion, direccion, foto, profesion);
     }
 }
