@@ -3,6 +3,8 @@ package tec.ispc.workflix.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Servicio {
     @SerializedName("id")
     @Expose
@@ -11,9 +13,7 @@ public class Servicio {
     @SerializedName("nombre")
     @Expose
     private String nombre;
-    @SerializedName("usuario_id")
-    @Expose
-    private int usuario_id;
+
 
     public Servicio(){};
     public Servicio(int id, String nombre) {
@@ -36,11 +36,16 @@ public class Servicio {
         this.nombre = nombre;
     }
 
-    public int getUsuario_id() {
-        return usuario_id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Servicio)) return false;
+        Servicio servicio = (Servicio) o;
+        return id == servicio.id && Objects.equals(nombre, servicio.nombre);
     }
 
-    public void setUsuario_id(int usuario_id) {
-        this.usuario_id = usuario_id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre);
     }
 }

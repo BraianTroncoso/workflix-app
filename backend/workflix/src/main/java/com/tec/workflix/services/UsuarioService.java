@@ -15,7 +15,6 @@ import java.util.Map;
 public class UsuarioService implements IUsuarioInterface {
 
     @Autowired
-
     UsuarioDAO dao;
 
     @Override

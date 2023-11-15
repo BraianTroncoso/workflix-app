@@ -2,6 +2,8 @@ package com.tec.workflix.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Table(name = "Servicio")
 @Entity
 public class Servicio {
@@ -9,11 +11,11 @@ public class Servicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
+    @Column
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
+    private List<UsuarioServicio> usuarioServicios;
 
     public Servicio() {
     }
@@ -40,12 +42,11 @@ public class Servicio {
     }
 
 
-    public Usuario getUsuario() {
-        return usuario;
+    public List<UsuarioServicio> getUsuarioServicios() {
+        return usuarioServicios;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarioServicios(List<UsuarioServicio> usuarioServicios) {
+        this.usuarioServicios = usuarioServicios;
     }
-
 }
