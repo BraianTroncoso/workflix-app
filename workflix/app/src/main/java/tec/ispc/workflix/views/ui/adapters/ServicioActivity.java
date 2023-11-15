@@ -61,7 +61,7 @@ public class ServicioActivity extends AppCompatActivity {
                 Servicio servicio = new Servicio();
 
                 servicio.setNombre(txtNombre.getText().toString());
-                servicio.setUsuario_id(Integer.parseInt(txtUsuSer.getText().toString()));
+               /* servicio.setUsuario_id(Integer.parseInt(txtUsuSer.getText().toString()));*/
 
 
                 if(id.trim().length()==0||id.equals("")){
