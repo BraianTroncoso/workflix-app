@@ -17,8 +17,7 @@ public class Apis {
         return Cliente.getCliente(URL_002).create(UsuarioService.class);
     }
 
-    public static UsuarioService getUsuarioService(){
+    public static UsuarioServicioService getUsuarioServicioService(){
         return Cliente.getCliente(URL_003).create(UsuarioServicioService.class);
     }
-
 }
