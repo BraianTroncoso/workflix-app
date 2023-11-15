@@ -10,11 +10,11 @@ public class UsuarioServicio {
 
     @SerializedName("usuario_id")
     @Expose
-    private Usuario usuario_id;
+    private int usuarioId; // Cambiar a int para representar solo el ID del usuario
 
     @SerializedName("servicio_id")
     @Expose
-    private Servicio servicio_id;
+    private int servicioId; // Cambiar a int para representar solo el ID del servicio
 
     public int getId() {
         return id;
@@ -24,19 +24,19 @@ public class UsuarioServicio {
         this.id = id;
     }
 
-    public Usuario getUsuario_id() {
-        return usuario_id;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario_id(Usuario usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public Servicio getServicio_id() {
-        return servicio_id;
+    public int getServicioId() {
+        return servicioId;
     }
 
-    public void setServicio_id(Servicio servicio_id) {
-        this.servicio_id = servicio_id;
+    public void setServicioId(int servicioId) {
+        this.servicioId = servicioId;
     }
 }

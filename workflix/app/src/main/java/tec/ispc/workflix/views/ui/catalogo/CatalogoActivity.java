@@ -28,7 +28,8 @@ public class CatalogoActivity extends AppCompatActivity {
     private List<Usuario> listaDeUsuarios = new ArrayList<>();
     List<Servicio> listaDeServicios= new ArrayList<>();
     List<UsuarioServicio> listaDeUsuarioServicios= new ArrayList<>();
-
+    private int serviciosCargados = 0;
+    private int usuarioServiciosCargados = 0;
 
 
     @Override
@@ -52,8 +53,9 @@ public class CatalogoActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     listaDeServicios = response.body();
                     Log.d("listServicio", "Lista de servicios obtenida correctamente.");
-                    // Continuar con la asignación de profesiones
-                   /* asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);*/
+                    serviciosCargados++;
+                    // Verificar si ambas listas están cargadas
+                    verificarListasCargadas();
                 }
             }
             @Override
@@ -71,8 +73,9 @@ public class CatalogoActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     listaDeUsuarioServicios = response.body();
                     Log.d("listUsuarioServicio", "Lista de Usuarioservicios obtenida correctamente.");
-                    // Continuar con la asignación de profesiones
-                   /* asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);*/
+                    usuarioServiciosCargados++;
+                    // Verificar si ambas listas están cargadas
+                    verificarListasCargadas();
                 }
             }
             @Override
@@ -93,6 +96,7 @@ public class CatalogoActivity extends AppCompatActivity {
                     listaDeUsuarios = response.body();
                     listaDeUsuarios = filtrarUsuariosNoAdmin(listaDeUsuarios);
                     // Llamada síncrona a listServicio() antes de asignar profesiones
+
                     listServicio();
                     listUsuarioServicio();
                     listaDeUsuarios = asignarProfesiones(listaDeUsuarios,listaDeServicios,listaDeUsuarioServicios);
@@ -119,17 +123,23 @@ public class CatalogoActivity extends AppCompatActivity {
     }
     private List<Usuario> asignarProfesiones(List<Usuario> usuarios, List<Servicio> servicios, List<UsuarioServicio> usuarioServicios) {
         List<Usuario> usuariosConProfesion = new ArrayList<>();
-
+        Log.d("DEBUG", "Número de usuarios: " + usuarios.size());
+        Log.d("DEBUG", "Número de servicios: " + servicios.size());
+        Log.d("DEBUG", "Número de usuarioServicios: " + usuarioServicios.size());
         for (Usuario usuario : usuarios) {
             boolean tieneProfesion = false;
             for (Servicio servicio : servicios) {
                 for (UsuarioServicio usuarioServicio : usuarioServicios) {
-                    if (usuarioServicio.getUsuario_id().equals(usuario) && usuarioServicio.getServicio_id().equals(servicio)) {
+                    Log.d("DEBUG", "Comparando usuario_id: " + usuarioServicio.getUsuarioId() + " con " + usuario.getId());
+                    Log.d("DEBUG", "Comparando servicio_id: " + usuarioServicio.getServicioId() + " con " + servicio.getId());
+                    if (usuarioServicio.getUsuarioId() == usuario.getId() && usuarioServicio.getServicioId() == servicio.getId()) {
+                        Log.d("DEBUG", "Coincidencia encontrada");
                         usuario.setProfesion(servicio.getNombre());
                         tieneProfesion = true;
                         break;
                     }
                 }
+
             }
             if (!tieneProfesion) {
                 usuario.setProfesion("No tiene profesion");
@@ -139,4 +149,11 @@ public class CatalogoActivity extends AppCompatActivity {
         return usuariosConProfesion;
     }
 
+    private void verificarListasCargadas() {
+        if (serviciosCargados == 1 && usuarioServiciosCargados == 1) {
+            // Ambas listas están cargadas, ahora puedes continuar con la asignación de profesiones
+            asignarProfesiones(listaDeUsuarios, listaDeServicios, listaDeUsuarioServicios);
+            catalogoAdapter.setUsuarios(listaDeUsuarios);
+        }
+}
 }
