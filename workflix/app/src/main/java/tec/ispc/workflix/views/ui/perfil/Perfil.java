@@ -37,6 +37,7 @@ import tec.ispc.workflix.models.Usuario;
 import tec.ispc.workflix.utils.Apis;
 import tec.ispc.workflix.utils.UsuarioService;
 import tec.ispc.workflix.views.MainActivity;
+import tec.ispc.workflix.views.ui.login.LoginActivity;
 import tec.ispc.workflix.views.ui.perfil.perfil_terminos.PerfilTerminosActivity;
 
 public class Perfil extends AppCompatActivity {
@@ -150,7 +151,7 @@ public class Perfil extends AppCompatActivity {
 
 
             updateUsuario(usuario,Integer.valueOf(id));
-            Intent intent = new Intent(Perfil.this, PerfilTerminosActivity.class);
+            Intent intent = new Intent(Perfil.this, LoginActivity.class);
             startActivity(intent);
         }
     });
