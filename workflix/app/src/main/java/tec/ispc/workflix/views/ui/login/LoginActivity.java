@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             String ciudad = response.isNull("ciudad") ? "" : response.getString("ciudad");
                             String descripcion = response.isNull("descripcion") ? "" : response.getString("descripcion");
                             String provincia = response.isNull("provincia") ? "" : response.getString("provincia");
-                           /* String profesion = response.isNull("profesion") ? "" : response.getString("profesion");*/
+                            String profesion = response.isNull("profesion") ? "" : response.getString("profesion");
                             String foto = response.isNull("foto") ? "" : response.getString("foto");
 
                             boolean is_admin = response.getBoolean("is_admin");
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("ciudad",ciudad);
                             editor.putString("descripcion",descripcion);
                             editor.putString("provincia",provincia);
-                        /*    editor.putString("profesion",profesion);*/
+                            editor.putString("profesion",profesion);
                             editor.putString("foto",foto);
                             editor.putBoolean("is_admin",is_admin);
                             editor.apply();

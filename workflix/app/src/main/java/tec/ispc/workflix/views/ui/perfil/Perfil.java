@@ -18,8 +18,10 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
@@ -28,15 +30,21 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tec.ispc.workflix.R;
+import tec.ispc.workflix.models.Servicio;
 import tec.ispc.workflix.models.Usuario;
+import tec.ispc.workflix.models.UsuarioServicio;
 import tec.ispc.workflix.utils.Apis;
+import tec.ispc.workflix.utils.ServicioService;
 import tec.ispc.workflix.utils.UsuarioService;
 import tec.ispc.workflix.views.MainActivity;
+import tec.ispc.workflix.views.ui.dashboard.DashboardServiciosActivity;
 import tec.ispc.workflix.views.ui.perfil.perfil_terminos.PerfilTerminosActivity;
 
 public class Perfil extends AppCompatActivity {
@@ -53,6 +61,8 @@ public class Perfil extends AppCompatActivity {
     final int COD_SELECCIONA = 10;
     final int COD_FOTO = 20;
     private String rutaImagen;
+    ServicioService servicioService;
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -96,6 +106,16 @@ public class Perfil extends AppCompatActivity {
         tv_descripcion.setText(descripcion);
         tv_provincia.setText(provincia);
         tv_profesion.setText(profesion);
+
+        Spinner spinnerServicios = findViewById(R.id.spinnerServicios);
+
+        if (!profesion.isEmpty()) {
+            listServicio(spinnerServicios);
+        } /*else {
+            // Si ya tienes el servicio, selecciona el valor en el Spinner
+            int position = adapter.getPosition(profesion);
+            spinnerServicios.setSelection(position);
+        }*/
 
         if (!foto.isEmpty()){
             Picasso.get().load(foto).into(imagenFoto);
@@ -155,6 +175,37 @@ public class Perfil extends AppCompatActivity {
         }
     });
     }
+    public void listServicio(final Spinner spinner) {
+        servicioService = Apis.getServicioService();
+        Call<List<Servicio>> call = servicioService.getServicios();
+        call.enqueue(new Callback<List<Servicio>>() {
+            @Override
+            public void onResponse(Call<List<Servicio>> call, Response<List<Servicio>> response) {
+                if (response.isSuccessful()) {
+                    List<Servicio> listarServicio = response.body();
+                    if (listarServicio != null && !listarServicio.isEmpty()) {
+                        // Crear una lista de nombres de servicios
+                        List<String> nombresServicios = new ArrayList<>();
+                        for (Servicio servicio : listarServicio) {
+                            nombresServicios.add(servicio.getNombre());
+                        }
+
+                        // Crear un ArrayAdapter para el Spinner
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Perfil.this, android.R.layout.simple_spinner_item, nombresServicios);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        // Establecer el ArrayAdapter en el Spinner
+                        spinner.setAdapter(adapter);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Servicio>> call, Throwable t) {
+                Log.e("Error no pude recuperar la lista de servicios:", t.getMessage());
+            }
+        });
+    }
+
     public void updateUsuario(Usuario usuario,int id){
         usuarioService= Apis.getUsuarioService();
         Call<Usuario>call=usuarioService.actPerfil(usuario,id);
