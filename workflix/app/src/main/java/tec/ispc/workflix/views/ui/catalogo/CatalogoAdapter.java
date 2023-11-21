@@ -41,9 +41,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
     public void setUsuarios(List<Usuario> usuarios) {
         listaDeUsuarios = usuarios;
         notifyDataSetChanged();
-    }
-
-
+    };
     @Override
     public CatalogoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tarjeta_profesional, parent, false);
@@ -83,6 +81,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
         holder.perfilDescripcion.setText(usuario.getDescripcion());
         String foto = usuario.getFoto();
         Log.d("RUTA DE IMAGEN", "Ruta de la imagen: " + foto);
+        // Agregando permisos cuando es android 6 o superior
         try {
             if (ContextCompat.checkSelfPermission(holder.itemView.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions((Activity) holder.itemView.getContext(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},PackageManager.PERMISSION_GRANTED);
@@ -93,20 +92,14 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalo
             }
         } catch (SecurityException e) {
             e.printStackTrace();
-        }
-
-
-
-
+        };
         holder.botonConsultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 abrirTarjetaAmpliadaActivity(position);
             }
         });
-    }
-
-
+    };
     private void abrirTarjetaAmpliadaActivity(int position) {
         Usuario usuario = listaDeUsuarios.get(position);
         Intent intent = new Intent(context, TarjetaAmpliadaActivity.class);

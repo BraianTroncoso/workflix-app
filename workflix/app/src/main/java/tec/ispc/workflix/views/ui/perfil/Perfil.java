@@ -96,8 +96,10 @@ public class Perfil extends AppCompatActivity {
         tv_descripcion.setText(descripcion);
         tv_provincia.setText(provincia);
         tv_profesion.setText(profesion);
-  /*      Picasso.get().load(foto).into(imagenFoto);*/
 
+        if (!foto.isEmpty()){
+            Picasso.get().load(foto).into(imagenFoto);
+        };
 
         btnEliminarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
