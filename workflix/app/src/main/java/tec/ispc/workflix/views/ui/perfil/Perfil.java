@@ -46,9 +46,9 @@ public class Perfil extends AppCompatActivity {
     private Button sign_out_btn;
     private Button btnEliminarPerfil;
     private Button btnActualizarPerfil;
-    private String CARPETA_RAIZ="misImagenesPrueba/";
+/*    private String CARPETA_RAIZ="misImagenesPrueba/";
     private String RUTA_IMAGEN=CARPETA_RAIZ+"misFotos";
-    private String path;
+    private String path;*/
     private Bitmap bitmap;
     final int COD_SELECCIONA = 10;
     final int COD_FOTO = 20;
@@ -87,12 +87,6 @@ public class Perfil extends AppCompatActivity {
         String foto = preferences.getString("foto","");
         int id = preferences.getInt("id",0);
 
-
-        if (!foto.isEmpty()) {
-            Uri uriImagen = Uri.parse(foto);
-            // Usa una biblioteca como Picasso o Glide para cargar y mostrar la imagen
-            Picasso.get().load(uriImagen).into(imagenFoto);
-        }
         // Seteo los valores al perfil
         tv_nombre.setText(nombre);
         tv_apellido.setText(apellido);
@@ -102,9 +96,7 @@ public class Perfil extends AppCompatActivity {
         tv_descripcion.setText(descripcion);
         tv_provincia.setText(provincia);
         tv_profesion.setText(profesion);
-
-
-
+  /*      Picasso.get().load(foto).into(imagenFoto);*/
 
 
         btnEliminarPerfil.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +131,6 @@ public class Perfil extends AppCompatActivity {
                 finish();
             }
         });
-
     btnActualizarPerfil.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -157,21 +148,11 @@ public class Perfil extends AppCompatActivity {
 
 
             updateUsuario(usuario,Integer.valueOf(id));
-            Intent intent =new Intent(Perfil.this, PerfilTerminosActivity.class);
+            Intent intent = new Intent(Perfil.this, PerfilTerminosActivity.class);
             startActivity(intent);
-
         }
     });
     }
-
-    private String convertirImgString(Bitmap bitmap) {
-        ByteArrayOutputStream array = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
-        byte [] imagenByte = array.toByteArray();
-        String imagenString = Base64.encodeToString(imagenByte,Base64.DEFAULT);
-        return imagenString;
-    }
-
     public void updateUsuario(Usuario usuario,int id){
         usuarioService= Apis.getUsuarioService();
         Call<Usuario>call=usuarioService.actPerfil(usuario,id);
@@ -200,7 +181,6 @@ public class Perfil extends AppCompatActivity {
                     Toast.makeText(Perfil.this,"Se Elimino el registro con éxito",Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
                 Log.e("Error al eliminar el Usuario:",t.getMessage());
@@ -209,7 +189,6 @@ public class Perfil extends AppCompatActivity {
         Intent intent =new Intent(Perfil.this, MainActivity.class);
         startActivity(intent);
     }
-
     public void subirFoto(View view) {
         cargarImagen();
     }
@@ -232,12 +211,47 @@ public class Perfil extends AppCompatActivity {
                     }else {
                         dialogInterface.dismiss();
                     }
-                /*}*/
             }
         });
         alertOpciones.show();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            switch (requestCode){
+                case COD_SELECCIONA:
+                    Uri miPath = data.getData();
+                    // Guarda la URI de la imagen para su posterior uso
+                    rutaImagen = miPath.toString();
+                    try {
+                        bitmap=MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(),miPath);
+                        imagenFoto.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                /*case COD_FOTO:
+                    MediaScannerConnection.scanFile(this, new String[]{rutaImagen}, null, new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String s, Uri uri) {
+                            Log.i("Ruta de almacenamiento","Path: "+rutaImagen);
+                        }
+                    });
+                    bitmap = BitmapFactory.decodeFile(rutaImagen);
+                    imagenFoto.setImageBitmap(bitmap);*/
+            }
 
+        }
+    }
+
+  /*  private String convertirImgString(Bitmap bitmap) {
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
+        byte [] imagenByte = array.toByteArray();
+        String imagenString = Base64.encodeToString(imagenByte,Base64.DEFAULT);
+        return imagenString;
+    }
     private void tomarFotografia() {
         File fileImagen = new File(Environment.getExternalStorageDirectory(),RUTA_IMAGEN);
         boolean isCreada = fileImagen.exists();
@@ -255,38 +269,7 @@ public class Perfil extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
         startActivityForResult(intent,COD_FOTO);
-    };
+    };*/
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            switch (requestCode){
-                case COD_SELECCIONA:
-                    Uri miPath = data.getData();
-                    // Guarda la URI de la imagen para su posterior uso
-                    rutaImagen = miPath.toString();
-                    // Guarda "rutaImagen" en la base de datos o en SharedPreferences
-                    //imagen.setImageURI(miPath);
-                    try {
-                        bitmap=MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(),miPath);
-                        imagenFoto.setImageBitmap(bitmap);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case COD_FOTO:
-                    MediaScannerConnection.scanFile(this, new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String s, Uri uri) {
-                            Log.i("Ruta de almacenamiento","Path: "+path);
-                        }
-                    });
-                    bitmap = BitmapFactory.decodeFile(path);
-                    imagenFoto.setImageBitmap(bitmap);
-            }
-
-        }
-    }
 }
 
