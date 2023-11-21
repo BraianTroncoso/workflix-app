@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 import tec.ispc.workflix.R;
 import tec.ispc.workflix.views.MainActivity;
@@ -24,7 +30,7 @@ public class PerfilTerminosActivity extends AppCompatActivity {
     private TextView tv_decripcion;
     ImageView tv_foto;
     private Button sign_out_btn;
-
+    private Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +46,15 @@ public class PerfilTerminosActivity extends AppCompatActivity {
         String apellido = preferences.getString("apellido", "");
         String telefono = preferences.getString("descripcion", "");
         String foto = preferences.getString("foto", "");
-        if (!foto.isEmpty()) {
-            Uri uriImagen = Uri.parse(foto);
-            // Usa una biblioteca como Picasso o Glide para cargar y mostrar la imagen
-            Picasso.get().load(uriImagen).into(tv_foto);
-        }
-
+        if (!foto.isEmpty()){
+            Picasso.get().load(foto).into(tv_foto);
+        };
 
         tv_nombre.setText(nombre);
         tv_apellido.setText(apellido);
         tv_decripcion.setText(telefono);
 
-
-
         sign_out_btn = findViewById(R.id.btn_Cerrar_sesion);
-
         // Set On click listener
         sign_out_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,6 @@ public class PerfilTerminosActivity extends AppCompatActivity {
         tv_apellido.setText(null);
         tv_decripcion.setText(null);
         tv_foto.setImageBitmap(null);
-
 
         // Obtener una referencia a SharedPreferences
         SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
@@ -91,11 +90,9 @@ public class PerfilTerminosActivity extends AppCompatActivity {
         Intent irPerfilEditarIntent = new Intent(this, Perfil.class);
         startActivity(irPerfilEditarIntent);
     };
-
     public void terminos (View view) {
         Intent intent = new Intent(this, terminosCondiciones.class);
         startActivity(intent);
         finish();
     };
-
 };
