@@ -186,6 +186,8 @@ public class Perfil extends AppCompatActivity {
                     if (listarServicio != null && !listarServicio.isEmpty()) {
                         // Crear una lista de nombres de servicios
                         List<String> nombresServicios = new ArrayList<>();
+                        // Agregar la opción "Selecciona tu servicio" al principio
+                        nombresServicios.add("Selecciona tu servicio");
                         for (Servicio servicio : listarServicio) {
                             nombresServicios.add(servicio.getNombre());
                         }
