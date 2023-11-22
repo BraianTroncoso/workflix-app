@@ -78,6 +78,7 @@ public class PerfilTerminosActivity extends AppCompatActivity {
         editor.putString("apellido", null);
         editor.putString("correo", null);
         editor.putString("descripcion", null);
+        editor.putString("profesion", null);
         editor.putString("foto", null);
         editor.remove("is_admin");
         editor.apply();
