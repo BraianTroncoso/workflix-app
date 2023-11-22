@@ -170,6 +170,19 @@ public class Perfil extends AppCompatActivity {
 
 
             updateUsuario(usuario,Integer.valueOf(id));
+            SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("id",usuario.getId());
+            editor.putString("nombre", usuario.getNombre());
+            editor.putString("apellido", usuario.getApellido());
+            editor.putString("telefono", usuario.getTelefono());
+            editor.putString("correo", usuario.getCorreo());
+            editor.putString("ciudad",usuario.getCiudad());
+            editor.putString("descripcion",usuario.getDescripcion());
+            editor.putString("provincia",usuario.getProvincia());
+            editor.putString("profesion",usuario.getProfesion());
+            editor.putString("foto",usuario.getFoto());
+            editor.apply();
             Intent intent = new Intent(Perfil.this, PerfilTerminosActivity.class);
             startActivity(intent);
         }
