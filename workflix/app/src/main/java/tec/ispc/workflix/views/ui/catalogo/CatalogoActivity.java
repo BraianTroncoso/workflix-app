@@ -1,5 +1,7 @@
 package tec.ispc.workflix.views.ui.catalogo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -135,6 +137,15 @@ public class CatalogoActivity extends AppCompatActivity {
                     if (usuarioServicio.getUsuarioId() == usuario.getId() && usuarioServicio.getServicioId() == servicio.getId()) {
                         Log.d("DEBUG", "Coincidencia encontrada");
                         usuario.setProfesion(servicio.getNombre());
+                        SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                        if (preferences.contains("nombre" )) {
+                            int id = preferences.getInt("id",0);
+                            if (usuario.getId() == id){
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("profesion", usuario.getProfesion());
+                                editor.apply();
+                            }
+                        }
                         tieneProfesion = true;
                         break;
                     }
