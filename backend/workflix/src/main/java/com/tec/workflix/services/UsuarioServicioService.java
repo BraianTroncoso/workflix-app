@@ -1,6 +1,9 @@
 package com.tec.workflix.services;
 
 import com.tec.workflix.interfaces.IUsuarioServicioInterface;
+import com.tec.workflix.models.Servicio;
+import com.tec.workflix.models.Usuario;
+import com.tec.workflix.models.UsuarioServicio;
 import com.tec.workflix.modelsDAO.UsuarioServicioDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +20,10 @@ public class UsuarioServicioService implements IUsuarioServicioInterface {
     @Override
     public List<Map<String, Object>> listar() {
         return dao.listar();
+    }
+
+    @Override
+    public int actualizarServicio(UsuarioServicio usuarioServicio) {
+        return dao.actualizarServicio(usuarioServicio);
     }
 }
