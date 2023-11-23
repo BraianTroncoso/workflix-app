@@ -67,6 +67,7 @@
 
     <TextView
         android:id="@+id/perfilDescripcion"
+        android:textColor="@color/black"
         android:layout_width="348dp"
         android:layout_height="87dp"
         android:text="Descripcion de los Servicios"
@@ -80,16 +81,18 @@
         app:layout_constraintVertical_bias="0.578" />
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/perfilCorreo"
-        android:layout_width="349dp"
-        android:layout_height="47dp"
+        android:layout_width="176dp"
+        android:layout_height="39dp"
         android:text="Correo Electronico"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintVertical_bias="0.682" />
 
     <TextView
         android:id="@+id/perfilCiudad"
@@ -97,39 +100,42 @@
         android:layout_height="39dp"
         android:text="Ciudad"
         android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.758" />
+
+    <TextView
+        android:id="@+id/perfilProvincia"
+        android:layout_width="176dp"
+        android:layout_height="39dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.682" />
+
+    <TextView
+        android:id="@+id/perfilTelefono"
+        android:layout_width="176dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:text="Telefono"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.762" />
-
-    <TextView
-        android:id="@+id/perfilProvincia"
-        android:layout_width="155dp"
-        android:layout_height="40dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
-
-    <TextView
-        android:id="@+id/perfilTelefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Telefono"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814" />
+        app:layout_constraintVertical_bias="0.758" />
 
     <TextView
         android:id="@+id/perfilServicio"

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import tec.ispc.workflix.views.ui.catalogo.CatalogoActivity;
 import tec.ispc.workflix.views.ui.dashboard.DashboardAdminActivity;
 import tec.ispc.workflix.views.ui.login.LoginActivity;
 import tec.ispc.workflix.views.ui.menu.*;
@@ -25,7 +26,7 @@ import tec.ispc.workflix.views.ui.perfil.perfil_terminos.PerfilTerminosActivity;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-
+    private boolean autorizacion = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       if (isAdmin) {
           navigationView.getMenu().findItem(R.id.dashboard_admin).setVisible(true);
           navigationView.getMenu().findItem(R.id.nav_perfil_terminos).setVisible(false);
+          navigationView.getMenu().findItem(R.id.nav_settings).setVisible(false);
       }else if(!isAdmin) {
           navigationView.getMenu().findItem(R.id.nav_perfil_terminos).setVisible(true);
           navigationView.getMenu().findItem(R.id.dashboard_admin).setVisible(false);
+          navigationView.getMenu().findItem(R.id.nav_settings).setVisible(true);
       }
       } else {
           navigationView.getMenu().findItem(R.id.dashboard_admin).setVisible(false);
@@ -125,5 +128,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    public void autorizacionHome(){
+        SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        if (preferences.contains("nombre")){
+            autorizacion = true;
+            Intent catalogoIntent = new Intent(this, CatalogoActivity.class);
+            startActivity(catalogoIntent);
+        }
     }
 };
