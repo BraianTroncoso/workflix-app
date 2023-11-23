@@ -23,19 +23,9 @@ public class UsuarioServicioDAO implements IUsuarioServicioInterface {
         return list;
     }
 
-
     @Override
-    public int actualizarServicio(UsuarioServicio usuarioServicio) {
-        if (usuarioServicio.getUsuario() != null && usuarioServicio.getServicio() != null) {
-            String sql = "update usuario_servicio set servicio_id=?, usuario_id=? where id=?";
-            return template.update(sql, usuarioServicio.getServicio().getId(), usuarioServicio.getUsuario().getId(), usuarioServicio.getId());
-        } else {
-            // Manejo de caso cuando usuarioServicio.getUsuario() o usuarioServicio.getServicio() es nulo
-            return -1; // o lanza una excepción apropiada
-        }
+    public int actualizarServicio(UsuarioServicio usuarioServicio){
+        String sql = "update usuario_servicio set servicio_id=?, usuario_id=? where id=?";
+        return template.update(sql, usuarioServicio.getServicio().getId(), usuarioServicio.getUsuario().getId(), usuarioServicio.getId());
     }
-
-
-
-
 }

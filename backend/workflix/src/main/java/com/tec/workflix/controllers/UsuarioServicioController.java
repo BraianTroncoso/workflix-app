@@ -24,11 +24,16 @@ public class UsuarioServicioController {
 
     @PostMapping("/actualizar/{id}")
     public String save(@RequestBody UsuarioServicio usuarioServicio, @PathVariable int id, Model model) {
-        usuarioServicio.setId(id);
-        int r=service.actualizarServicio(usuarioServicio);
-        if(r==0) {
-            return "No se pudo Actualizar!";
+        try {
+            usuarioServicio.setId(id);
+            int r = service.actualizarServicio(usuarioServicio);
+            if (r == 0) {
+                return "No se pudo Actualizar!";
+            }
+            return "Se actualizó con éxito!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error en la actualización: " + e.getMessage();
         }
-        return "Se actualizó con éxito!";
     }
 }
