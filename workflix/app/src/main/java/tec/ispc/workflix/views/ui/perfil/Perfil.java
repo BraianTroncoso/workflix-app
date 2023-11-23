@@ -182,6 +182,7 @@ public class Perfil extends AppCompatActivity {
             editor.putString("provincia",usuario.getProvincia());
             editor.putString("profesion",usuario.getProfesion());
             editor.putString("foto",usuario.getFoto());
+
             editor.apply();
             Intent intent = new Intent(Perfil.this, PerfilTerminosActivity.class);
             startActivity(intent);
