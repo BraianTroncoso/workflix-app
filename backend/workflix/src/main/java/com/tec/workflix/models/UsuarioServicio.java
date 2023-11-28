@@ -1,9 +1,12 @@
 package com.tec.workflix.models;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Usuario_Servicio")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class UsuarioServicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,24 +17,12 @@ public class UsuarioServicio {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "servicio_id")
-    private Servicio servicio;
-
-    public Usuario getUsuario() {
+    public Usuario getUsuario(){
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Servicio getServicio() {
+    public Servicio getServicio(){
         return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
     }
 
     public int getId() {
@@ -41,4 +32,19 @@ public class UsuarioServicio {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "servicio_id")
+    private Servicio servicio;
+
+
+
 }
