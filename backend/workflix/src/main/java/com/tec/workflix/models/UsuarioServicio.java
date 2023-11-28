@@ -17,6 +17,10 @@ public class UsuarioServicio {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "servicio_id")
+    private Servicio servicio;
+
     public Usuario getUsuario(){
         return usuario;
     }
@@ -41,9 +45,6 @@ public class UsuarioServicio {
         this.servicio = servicio;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "servicio_id")
-    private Servicio servicio;
 
 
 
