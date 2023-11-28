@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +44,7 @@ import tec.ispc.workflix.models.UsuarioServicio;
 import tec.ispc.workflix.utils.Apis;
 import tec.ispc.workflix.utils.ServicioService;
 import tec.ispc.workflix.utils.UsuarioService;
+import tec.ispc.workflix.utils.UsuarioServicioService;
 import tec.ispc.workflix.views.MainActivity;
 import tec.ispc.workflix.views.ui.dashboard.DashboardServiciosActivity;
 import tec.ispc.workflix.views.ui.perfil.perfil_terminos.PerfilTerminosActivity;
@@ -50,6 +52,8 @@ import tec.ispc.workflix.views.ui.perfil.perfil_terminos.PerfilTerminosActivity;
 public class Perfil extends AppCompatActivity {
     ImageView imagenFoto;
     private UsuarioService usuarioService;
+    private UsuarioServicioService usuarioServicioService;
+    private int servicioIdSeleccionado = -1;
     private TextView tv_nombre, tv_apellido, tv_correo, tv_telefono, tv_ciudad, tv_profesion, tv_provincia, tv_descripcion, tv_foto;
     private Button sign_out_btn;
     private Button btnEliminarPerfil;
@@ -113,7 +117,7 @@ public class Perfil extends AppCompatActivity {
             listServicio(spinnerServicios);
         } /*else {
             // Si ya tienes el servicio, selecciona el valor en el Spinner
-            int position = adapter.getPosition(profesion);
+            position = adapter.getPosition(profesion);
             spinnerServicios.setSelection(position);
         }*/
 
@@ -167,9 +171,12 @@ public class Perfil extends AppCompatActivity {
             usuario.setProfesion(tv_profesion.getText().toString());
             usuario.setDescripcion(tv_descripcion.getText().toString());
             usuario.setFoto(rutaImagen);
-
-
             updateUsuario(usuario,Integer.valueOf(id));
+
+
+            UsuarioServicio usuarioServicio = new UsuarioServicio();
+            updateUsuariosPrestaciones(usuarioServicio,Integer.valueOf(id),servicioIdSeleccionado);
+
             SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("id",usuario.getId());
@@ -212,9 +219,27 @@ public class Perfil extends AppCompatActivity {
 
                         // Establecer el ArrayAdapter en el Spinner
                         spinner.setAdapter(adapter);
+
+                        // Agregar OnItemSelectedListener al Spinner
+                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                                // La variable 'position' contiene la posición del servicio seleccionado en el Spinner
+                                if (position > 0) {
+                                    // El usuario ha seleccionado un servicio (no es la opción "Selecciona tu servicio")
+                                    servicioIdSeleccionado = listarServicio.get(position - 1).getId();
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parentView) {
+                                // Manejar el caso en el que no se ha seleccionado nada
+                            }
+                        });
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<List<Servicio>> call, Throwable t) {
                 Log.e("Error no pude recuperar la lista de servicios:", t.getMessage());
@@ -239,6 +264,35 @@ public class Perfil extends AppCompatActivity {
         });
         Intent intent =new Intent(Perfil.this, PerfilTerminosActivity.class);
         startActivity(intent);
+    }
+    public void updateUsuariosPrestaciones(UsuarioServicio usuarioServicio, int usuarioId, int servicioId) {
+        usuarioServicioService = Apis.getUsuarioServicioService();
+        usuarioServicio.setUsuarioId(usuarioId);
+        usuarioServicio.setServicioId(servicioId);
+
+        // Comprobar si ya existe una relación con el usuarioId y servicioId
+        if (usuarioServicio.getUsuarioId() == usuarioId && usuarioServicio.getServicioId() == servicioId) {
+            int usuarioServicioPosition = usuarioServicio.getId();
+            // Realizar la actualización
+            Call<UsuarioServicio> call = usuarioServicioService.updateUsuariosPrestaciones(usuarioServicio, usuarioServicioPosition);
+
+            call.enqueue(new Callback<UsuarioServicio>() {
+                @Override
+                public void onResponse(Call<UsuarioServicio> call, Response<UsuarioServicio> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(Perfil.this, "Se Actualizó con éxito la relación usuario-servicio", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UsuarioServicio> call, Throwable t) {
+                    Log.e("Error al actualizar la relación usuario-servicio:", t.getMessage());
+                }
+            });
+        } else {
+            // Aquí puedes manejar el caso en que no existe la relación con usuarioId y servicioId
+            Log.e("Error:", "No existe la relación usuario-servicio con los IDs proporcionados");
+        }
     }
     public void deleteUsuario(int id){
         usuarioService= Apis.getUsuarioService();
