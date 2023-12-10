@@ -1,8 +1,9 @@
 # Workflix App
 Es una aplicación nativa de Android realizada de manera grupal durante el 2do. Cuatrimestre, del 2do. año, para la Tecnicatura en Desarrollo Web y Aplicaciones Móviles del ISPC.
 
-![Uploading workflix_ok.png…]()
 
+
+![workflix_ok](https://github.com/BraianTroncoso/workflix-app/assets/95662710/b1bfc40e-bc58-4bda-8bed-a76c04504cbb)
 
 
 
